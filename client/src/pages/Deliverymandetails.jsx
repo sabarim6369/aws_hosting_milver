@@ -104,6 +104,8 @@ function Deliverymandetails() {
   useEffect(() => {
     let isMounted = true;
     const getDeliverymenData = async () => {
+      // API call commented out for dummy data testing
+      /*
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}/deliverymen/`
@@ -114,6 +116,99 @@ function Deliverymandetails() {
         }
       } catch (error) {
         console.error("Error fetching deliverymen data: ", error);
+      }
+      */
+
+      // Dummy Data
+      const dummyData = [
+        {
+          _id: "1",
+          name: "Ramesh Kumar",
+          email: "ramesh@example.com",
+          phone: "9876543210",
+          address: "123, Gandhi Road, T Nagar, Chennai",
+          primaryRouteName: "T Nagar",
+          status: "available",
+          category: "main_driver",
+          attendence: [{ status: "present" }, { status: "present" }],
+          routes: ["T Nagar", "Kodambakkam"],
+          delivery_history: [],
+          fuel_allowance: [],
+        },
+        {
+          _id: "2",
+          name: "Suresh Babu",
+          email: "suresh@example.com",
+          phone: "8765432109",
+          address: "456, Annasalai, Nungambakkam, Chennai",
+          primaryRouteName: "Nungambakkam",
+          status: "assigned",
+          category: "main_driver",
+          attendence: [{ status: "present" }],
+          routes: ["Nungambakkam"],
+          delivery_history: [],
+          fuel_allowance: [],
+        },
+        {
+          _id: "3",
+          name: "John Doe",
+          email: "john@example.com",
+          phone: "7654321098",
+          address: "789, ECR Road, Adyar, Chennai",
+          primaryRouteName: "Adyar",
+          status: "on_leave",
+          category: "backup_driver",
+          attendence: [],
+          routes: ["Adyar", "Thiruvanmiyur"],
+          delivery_history: [],
+          fuel_allowance: [],
+        },
+        {
+          _id: "4",
+          name: "Jane Smith",
+          email: "jane@example.com",
+          phone: "6543210987",
+          address: "321, OMR Road, Velachery, Chennai",
+          primaryRouteName: "Velachery",
+          status: "available",
+          category: "main_driver",
+          attendence: [{ status: "present" }, { status: "present" }, { status: "present" }],
+          routes: ["Velachery"],
+          delivery_history: [],
+          fuel_allowance: [],
+        },
+        {
+          _id: "5",
+          name: "Michael Raj",
+          email: "michael@example.com",
+          phone: "9988776655",
+          address: "100, Church Road, Santhome, Chennai",
+          primaryRouteName: "Santhome",
+          status: "available",
+          category: "main_driver",
+          attendence: [{ status: "present" }, { status: "present" }, { status: "present" }, { status: "present" }],
+          routes: ["Santhome", "Mylapore"],
+          delivery_history: [],
+          fuel_allowance: [],
+        },
+        {
+          _id: "6",
+          name: "Priya Darshini",
+          email: "priya@example.com",
+          phone: "9123456789",
+          address: "55, Lake View Road, Mudichur, Chennai",
+          primaryRouteName: "Tambaram",
+          status: "assigned",
+          category: "backup_driver",
+          attendence: [{ status: "present" }],
+          routes: ["Tambaram", "Chromepet"],
+          delivery_history: [],
+          fuel_allowance: [],
+        }
+      ];
+
+      if (isMounted) {
+        setdelivermendata(dummyData);
       }
     };
 
@@ -393,7 +488,7 @@ function Deliverymandetails() {
           </div>
         </div>
         <div className="filter-bar">
-        <div className="search-barmain">
+          <div className="search-barmain">
             <FaSearch className="search-iconmain" />
             <input
               type="text"
@@ -434,25 +529,24 @@ function Deliverymandetails() {
           {filteredEmployees.map((employee, index) => {
             const presentCount = Array.isArray(employee.attendence)
               ? employee.attendence.filter(
-                  (att) => att.status.toLowerCase() === "present"
-                ).length
+                (att) => att.status.toLowerCase() === "present"
+              ).length
               : 0;
 
             return (
               <div key={index} className="employee-card">
-             <div
-  className={`employee-status ${
-    employee.status === "assigned"
-      ? "assigned"
-      : employee.status === "available"
-      ? "available"
-      : employee.status === "on_leave"
-      ? "on-leave"
-      : ""
-  }`}
->
-  {employee.status}
-</div>
+                <div
+                  className={`employee-status ${employee.status === "assigned"
+                    ? "assigned"
+                    : employee.status === "available"
+                      ? "available"
+                      : employee.status === "on_leave"
+                        ? "on-leave"
+                        : ""
+                    }`}
+                >
+                  {employee.status}
+                </div>
 
                 <div className="attendance-dropdown">
                   <button className="attendance-icon">
@@ -468,8 +562,8 @@ function Deliverymandetails() {
                   <div className="dropdown-menu">
                     <button
                       onClick={() =>
-                        handleAttendanceChange("Present", employee._id) }
-                        style={{padding:'12px 20px',  fontSize: "1.1em",fontWeight:"bold"}}
+                        handleAttendanceChange("Present", employee._id)}
+                      style={{ padding: '12px 20px', fontSize: "1.1em", fontWeight: "bold" }}
                     >
                       Present
                     </button>
@@ -477,7 +571,7 @@ function Deliverymandetails() {
                       onClick={() =>
                         handleAttendanceChange("Absent", employee._id)
                       }
-                      style={{padding:'12px 20px',  fontSize: "1.1em",fontWeight:"bold"}}
+                      style={{ padding: '12px 20px', fontSize: "1.1em", fontWeight: "bold" }}
                     >
                       Absent
                     </button>
@@ -515,293 +609,289 @@ function Deliverymandetails() {
           })}
         </div>
         {showModal && selectedEmployee && (
-  <div className="modal-overlay">
-    <div className="modal-container">
-      <div className="modal-header">
-        <h3 className="modal-title">{selectedEmployee.name}</h3>
-        <button className="modal-close-btn" onClick={handleCloseModal}>
-          <MdClose />
-        </button>
-      </div>
-      <div className="modal-body">
-        <p><strong>Phone:</strong> {selectedEmployee.phone}</p>
-        <p><strong>Email:</strong> {selectedEmployee.email}</p>
-        <p><strong>Address:</strong> {selectedEmployee.address}</p>
-        <p><strong>Primary Route:</strong> {selectedEmployee.primaryRouteName}</p>
-        <p><strong>Status:</strong> {selectedEmployee.status}</p>
-        <p><strong>External Status:</strong> {selectedEmployee.external_status}</p>
-      </div>
-      <div className="modal-footer">
-        <button className="btn-edit" onClick={handleEdit}>Edit</button>
-        <button className="btn-delete" onClick={handleShowDeleteConfirmation}>Delete</button>
-        <button className="btn-close" onClick={handleCloseModal}>Close</button>
-      </div>
-    </div>
-  </div>
-)}
-
-
-{showDeleteConfirmation && selectedEmployee && (
-  <div className="delete-backdrop">
-    <div className="delete-modal">
-      <div className="delete-header">
-        <h3>Are you sure you want to delete this employee?</h3>
-      </div>
-      <div className="delete-body">
-        <p>
-          To confirm, type the name{" "}
-          <strong>{selectedEmployee.name}</strong> below:
-        </p>
-        <input
-          type="text"
-          value={deleteConfirmation}
-          onChange={handleDeleteConfirmationChange}
-          placeholder="Enter name to confirm"
-          className="delete-input"
-        />
-      </div>
-      <div className="delete-footer">
-        <button
-          className="delete-cancel-btn"
-          onClick={handleCloseDeleteConfirmation}
-        >
-          Cancel
-        </button>
-        <button
-          className="delete-confirm-btn"
-          onClick={handleDelete}
-          disabled={deleteConfirmation !== selectedEmployee.name}
-        >
-          Confirm Delete
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
-{isAddEmployeeModalOpen && (
-  <div
-    className="add-employee-modal-overlay"
-    onClick={() => setIsAddEmployeeModalOpen(false)}
-  >
-    <div
-      className="add-employee-modal-content"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <div className="add-employee-modal-header">
-        <h2 className="add-employee-title">Add Employee</h2>
-        <button
-          className="add-employee-close-btn"
-          onClick={() => setIsAddEmployeeModalOpen(false)}
-        >
-          <MdClose />
-        </button>
-      </div>
-      <div className="add-employee-modal-body">
-        <input
-          type="text"
-          name="name"
-          placeholder="Employee Name"
-          value={customerForm.name}
-          onChange={(e) =>
-            setCustomerForm({ ...customerForm, name: e.target.value })
-          }
-          className={`add-employee-input ${
-            formErrors.name ? "input-error" : ""
-          }`}
-        />
-        {formErrors.name && (
-          <span className="error-message">{formErrors.name}</span>
+          <div className="modal-overlay">
+            <div className="modal-container">
+              <div className="modal-header">
+                <h3 className="modal-title">{selectedEmployee.name}</h3>
+                <button className="modal-close-btn" onClick={handleCloseModal}>
+                  <MdClose />
+                </button>
+              </div>
+              <div className="modal-body">
+                <p><strong>Phone:</strong> {selectedEmployee.phone}</p>
+                <p><strong>Email:</strong> {selectedEmployee.email}</p>
+                <p><strong>Address:</strong> {selectedEmployee.address}</p>
+                <p><strong>Primary Route:</strong> {selectedEmployee.primaryRouteName}</p>
+                <p><strong>Status:</strong> {selectedEmployee.status}</p>
+                <p><strong>External Status:</strong> {selectedEmployee.external_status}</p>
+              </div>
+              <div className="modal-footer">
+                <button className="btn-edit" onClick={handleEdit}>Edit</button>
+                <button className="btn-delete" onClick={handleShowDeleteConfirmation}>Delete</button>
+                <button className="btn-close" onClick={handleCloseModal}>Close</button>
+              </div>
+            </div>
+          </div>
         )}
 
-        <input
-          type="text"
-          name="phone"
-          placeholder="Phone"
-          value={customerForm.phone}
-          onChange={(e) =>
-            setCustomerForm({ ...customerForm, phone: e.target.value })
-          }
-          className={`add-employee-input ${
-            formErrors.phone ? "input-error" : ""
-          }`}
-        />
-        {formErrors.phone && (
-          <span className="error-message">{formErrors.phone}</span>
+
+        {showDeleteConfirmation && selectedEmployee && (
+          <div className="delete-backdrop">
+            <div className="delete-modal">
+              <div className="delete-header">
+                <h3>Are you sure you want to delete this employee?</h3>
+              </div>
+              <div className="delete-body">
+                <p>
+                  To confirm, type the name{" "}
+                  <strong>{selectedEmployee.name}</strong> below:
+                </p>
+                <input
+                  type="text"
+                  value={deleteConfirmation}
+                  onChange={handleDeleteConfirmationChange}
+                  placeholder="Enter name to confirm"
+                  className="delete-input"
+                />
+              </div>
+              <div className="delete-footer">
+                <button
+                  className="delete-cancel-btn"
+                  onClick={handleCloseDeleteConfirmation}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="delete-confirm-btn"
+                  onClick={handleDelete}
+                  disabled={deleteConfirmation !== selectedEmployee.name}
+                >
+                  Confirm Delete
+                </button>
+              </div>
+            </div>
+          </div>
         )}
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={customerForm.email}
-          onChange={(e) =>
-            setCustomerForm({ ...customerForm, email: e.target.value })
-          }
-          className={`add-employee-input ${
-            formErrors.email ? "input-error" : ""
-          }`}
-        />
-        {formErrors.email && (
-          <span className="error-message">{formErrors.email}</span>
-        )}
-
-        <input
-          type="text"
-          name="address"
-          placeholder="Address"
-          value={customerForm.address}
-          onChange={(e) =>
-            setCustomerForm({ ...customerForm, address: e.target.value })
-          }
-          className={`add-employee-input ${
-            formErrors.address ? "input-error" : ""
-          }`}
-        />
-        {formErrors.address && (
-          <span className="error-message">{formErrors.address}</span>
-        )}
-
-        <select
-          name="routes"
-          multiple
-          value={customerForm.routes}
-          onChange={(e) =>
-            setCustomerForm({
-              ...customerForm,
-              routes: Array.from(
-                e.target.selectedOptions,
-                (option) => option.value
-              ),
-            })
-          }
-          className="add-employee-select"
-        >
-          <option value="1">Route 1</option>
-          <option value="2">Route 2</option>
-          <option value="3">Route 3</option>
-        </select>
-
-        <select
-          name="category"
-          value={customerForm.category}
-          onChange={(e) =>
-            setCustomerForm({
-              ...customerForm,
-              category: e.target.value,
-            })
-          }
-          className="add-employee-select"
-        >
-          <option value="">Select Category</option>
-          <option value="main_driver">Driver</option>
-          <option value="backup_driver">Backup Driver</option>
-        </select>
-      </div>
-      <div className="add-employee-modal-footer">
-        <button className="add-employee-submit-btn" onClick={handleAddEmployee}>
-          Add Employee
-        </button>
-        <button
-          className="add-employee-cancel-btn"
-          onClick={() => setIsAddEmployeeModalOpen(false)}
-        >
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
-{isEditModalOpen && (
-  <div className="edit-modal-overlay">
-    <div className="edit-modal">
-      <div className="edit-modal-header">
-        <h2 className="edit-modal-title">Edit Employee Details</h2>
-        <button
-          className="edit-modal-close"
-          onClick={() => setIsEditModalOpen(false)}
-        >
-          <MdClose />
-        </button>
-      </div>
-      <div className="edit-modal-body">
-        <form>
-          <div className="edit-form-group">
-            <label htmlFor="employeeName">Employee Name</label>
-            <input
-              id="employeeName"
-              type="text"
-              name="name"
-              placeholder="Enter Employee Name"
-              value={editForm.name}
-              onChange={handleEditFormChange}
-            />
-          </div>
-          <div className="edit-form-group">
-            <label htmlFor="phone">Phone</label>
-            <input
-              id="phone"
-              type="text"
-              name="phone"
-              placeholder="Enter Phone Number"
-              value={editForm.phone}
-              onChange={handleEditFormChange}
-            />
-          </div>
-          <div className="edit-form-group">
-            <label htmlFor="address">Address</label>
-            <input
-              id="address"
-              type="text"
-              name="address"
-              placeholder="Enter Address"
-              value={editForm.address}
-              onChange={handleEditFormChange}
-            />
-          </div>
-          <div className="edit-form-group">
-            <label htmlFor="primaryRouteName">Primary Route</label>
-            <input
-              id="primaryRouteName"
-              type="text"
-              name="primaryRouteName"
-              placeholder="Enter Primary Route"
-              value={editForm.primaryRouteName}
-              onChange={handleEditFormChange}
-            />
-          </div>
-          <div className="edit-form-group">
-            <label htmlFor="status">Status</label>
-            <select
-              id="status"
-              name="status"
-              value={editForm.status}
-              onChange={handleEditFormChange}
+        {isAddEmployeeModalOpen && (
+          <div
+            className="add-employee-modal-overlay"
+            onClick={() => setIsAddEmployeeModalOpen(false)}
+          >
+            <div
+              className="add-employee-modal-content"
+              onClick={(e) => e.stopPropagation()}
             >
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
+              <div className="add-employee-modal-header">
+                <h2 className="add-employee-title">Add Employee</h2>
+                <button
+                  className="add-employee-close-btn"
+                  onClick={() => setIsAddEmployeeModalOpen(false)}
+                >
+                  <MdClose />
+                </button>
+              </div>
+              <div className="add-employee-modal-body">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Employee Name"
+                  value={customerForm.name}
+                  onChange={(e) =>
+                    setCustomerForm({ ...customerForm, name: e.target.value })
+                  }
+                  className={`add-employee-input ${formErrors.name ? "input-error" : ""
+                    }`}
+                />
+                {formErrors.name && (
+                  <span className="error-message">{formErrors.name}</span>
+                )}
+
+                <input
+                  type="text"
+                  name="phone"
+                  placeholder="Phone"
+                  value={customerForm.phone}
+                  onChange={(e) =>
+                    setCustomerForm({ ...customerForm, phone: e.target.value })
+                  }
+                  className={`add-employee-input ${formErrors.phone ? "input-error" : ""
+                    }`}
+                />
+                {formErrors.phone && (
+                  <span className="error-message">{formErrors.phone}</span>
+                )}
+
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={customerForm.email}
+                  onChange={(e) =>
+                    setCustomerForm({ ...customerForm, email: e.target.value })
+                  }
+                  className={`add-employee-input ${formErrors.email ? "input-error" : ""
+                    }`}
+                />
+                {formErrors.email && (
+                  <span className="error-message">{formErrors.email}</span>
+                )}
+
+                <input
+                  type="text"
+                  name="address"
+                  placeholder="Address"
+                  value={customerForm.address}
+                  onChange={(e) =>
+                    setCustomerForm({ ...customerForm, address: e.target.value })
+                  }
+                  className={`add-employee-input ${formErrors.address ? "input-error" : ""
+                    }`}
+                />
+                {formErrors.address && (
+                  <span className="error-message">{formErrors.address}</span>
+                )}
+
+                <select
+                  name="routes"
+                  multiple
+                  value={customerForm.routes}
+                  onChange={(e) =>
+                    setCustomerForm({
+                      ...customerForm,
+                      routes: Array.from(
+                        e.target.selectedOptions,
+                        (option) => option.value
+                      ),
+                    })
+                  }
+                  className="add-employee-select"
+                >
+                  <option value="1">Route 1</option>
+                  <option value="2">Route 2</option>
+                  <option value="3">Route 3</option>
+                </select>
+
+                <select
+                  name="category"
+                  value={customerForm.category}
+                  onChange={(e) =>
+                    setCustomerForm({
+                      ...customerForm,
+                      category: e.target.value,
+                    })
+                  }
+                  className="add-employee-select"
+                >
+                  <option value="">Select Category</option>
+                  <option value="main_driver">Driver</option>
+                  <option value="backup_driver">Backup Driver</option>
+                </select>
+              </div>
+              <div className="add-employee-modal-footer">
+                <button className="add-employee-submit-btn" onClick={handleAddEmployee}>
+                  Add Employee
+                </button>
+                <button
+                  className="add-employee-cancel-btn"
+                  onClick={() => setIsAddEmployeeModalOpen(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
           </div>
-        </form>
-      </div>
-      <div className="edit-modal-footer">
-        <button
-          className="edit-button edit-button-save"
-          onClick={handleSaveEdit}
-        >
-          Save
-        </button>
-        <button
-          className="edit-button edit-button-cancel"
-          onClick={() => setIsEditModalOpen(false)}
-        >
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+        )}
+
+        {isEditModalOpen && (
+          <div className="edit-modal-overlay">
+            <div className="edit-modal">
+              <div className="edit-modal-header">
+                <h2 className="edit-modal-title">Edit Employee Details</h2>
+                <button
+                  className="edit-modal-close"
+                  onClick={() => setIsEditModalOpen(false)}
+                >
+                  <MdClose />
+                </button>
+              </div>
+              <div className="edit-modal-body">
+                <form>
+                  <div className="edit-form-group">
+                    <label htmlFor="employeeName">Employee Name</label>
+                    <input
+                      id="employeeName"
+                      type="text"
+                      name="name"
+                      placeholder="Enter Employee Name"
+                      value={editForm.name}
+                      onChange={handleEditFormChange}
+                    />
+                  </div>
+                  <div className="edit-form-group">
+                    <label htmlFor="phone">Phone</label>
+                    <input
+                      id="phone"
+                      type="text"
+                      name="phone"
+                      placeholder="Enter Phone Number"
+                      value={editForm.phone}
+                      onChange={handleEditFormChange}
+                    />
+                  </div>
+                  <div className="edit-form-group">
+                    <label htmlFor="address">Address</label>
+                    <input
+                      id="address"
+                      type="text"
+                      name="address"
+                      placeholder="Enter Address"
+                      value={editForm.address}
+                      onChange={handleEditFormChange}
+                    />
+                  </div>
+                  <div className="edit-form-group">
+                    <label htmlFor="primaryRouteName">Primary Route</label>
+                    <input
+                      id="primaryRouteName"
+                      type="text"
+                      name="primaryRouteName"
+                      placeholder="Enter Primary Route"
+                      value={editForm.primaryRouteName}
+                      onChange={handleEditFormChange}
+                    />
+                  </div>
+                  <div className="edit-form-group">
+                    <label htmlFor="status">Status</label>
+                    <select
+                      id="status"
+                      name="status"
+                      value={editForm.status}
+                      onChange={handleEditFormChange}
+                    >
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+                  </div>
+                </form>
+              </div>
+              <div className="edit-modal-footer">
+                <button
+                  className="edit-button edit-button-save"
+                  onClick={handleSaveEdit}
+                >
+                  Save
+                </button>
+                <button
+                  className="edit-button edit-button-cancel"
+                  onClick={() => setIsEditModalOpen(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
 
 

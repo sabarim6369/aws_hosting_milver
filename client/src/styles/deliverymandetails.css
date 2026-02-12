@@ -122,115 +122,125 @@
 
 
 .employee-list {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 40px;
-  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 20px 0 40px 0;
   width: 100%;
-  overflow-y: scroll;
-  padding-top: 2%;
 }
 
 
 .employee-card {
   background-color: #fff;
-  border-radius: 15px;
-  padding: 20px;
-  width: 15%;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   text-align: center;
-  font-family: Arial, sans-serif;
+  font-family: 'Josefin Sans', sans-serif;
   position: relative;
-  transition: transform 0.3s;
-  font-size: larger;
-  align-items: center;
-  justify-content: center;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  border: 1px solid rgba(0,0,0,0.05);
 }
 
 .employee-card:hover {
-  transform: scale(1.1);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
+
 .employee-status {
-  font-weight: bold;
-  border-radius: 15px;
-  padding: 5px 12px;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 6px 14px;
   display: inline-block;
   position: absolute;
   top: 15px;
   left: 15px;
-  font-size: 0.9em;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  z-index: 2;
 }
 
 .employee-status.assigned {
-  background-color: #28a745;
-  color: #fff;
+  background-color: #d1fae5;
+  color: #065f46;
 }
 
 .employee-status.available {
-  background-color: #ffc107;
-  color: #fff;
+  background-color: #fef3c7;
+  color: #92400e;
 }
 
 .employee-status.on-leave {
-  background-color: #d9534f;
-  color: #fff;
+  background-color: #fee2e2;
+  color: #991b1b;
 }
 
 .employee-avatar {
-  width: 70px;
-  height: 70px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
-  margin: 10px auto;
+  margin: 25px auto 15px;
   display: block;
   object-fit: cover;
-  border: 2px solid #ddd;
+  border: 3px solid #f3f4f6;
+  padding: 3px;
 }
 
 .employee-info h3 {
-  font-size: 1.1em;
-  font-weight: 600;
-  margin: 5px 0;
-  color: #333;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 10px 0 5px;
+  color: #1f2937;
 }
 
 .employee-details {
-  background-color: #f7f7f7;
-  border-radius: 10px;
-  padding: 10px;
+  background-color: #f9fafb;
+  border-radius: 12px;
+  padding: 15px;
   margin: 15px 0;
   text-align: left;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  box-shadow: none;
 }
 
 .employee-details p {
-  font-size: 0.9em;
-  color: #555;
-  margin: 5px 0;
+  font-size: 0.9rem;
+  color: #4b5563;
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .employee-joined {
-  font-size: 0.85em;
-  color: #666;
-  margin-top: 10px;
+  margin-top: auto;
   text-align: center;
-  background-color: #3d4d8f;
-  width: 40%;
-  padding: 3px;
-  border-radius: 5px;
+  width: 100%;
 }
 
 .employee-joined a {
-  font-size: 0.85em;
+  display: block;
+  font-size: 0.95rem;
   color: white;
   text-decoration: none;
-  margin-left: 5px;
-  font-size: large;
-  font-weight: 550;
+  font-weight: 600;
+  background-color: #3d4d8f;
+  padding: 10px 0;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+  width: 100%;
+  text-align: center;
+  margin: 0;
 }
 
 .employee-joined a:hover {
-  text-decoration: underline;
+  background-color: #2c3e75;
+  text-decoration: none;
 }
 
 .attendance-dropdown {
